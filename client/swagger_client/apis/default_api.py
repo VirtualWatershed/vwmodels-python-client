@@ -47,7 +47,7 @@ class DefaultApi(object):
 
     def create_modelrun(self, **kwargs):
         """
-        
+
         This method is used to create a new model run.\n
 
         This method makes a synchronous HTTP request by default. To make an
@@ -121,7 +121,7 @@ class DefaultApi(object):
 
     def delete_modelrun(self, modelrun_id, **kwargs):
         """
-        
+
         This method is used to delete a model run and all its resources.\n
 
         This method makes a synchronous HTTP request by default. To make an
@@ -198,7 +198,7 @@ class DefaultApi(object):
 
     def get_model_progress(self, modelprogress_id, **kwargs):
         """
-        
+
         This method is used to get a specific progress event while a model is running.\n
 
         This method makes a synchronous HTTP request by default. To make an
@@ -275,7 +275,7 @@ class DefaultApi(object):
 
     def get_modelrun_by_id(self, modelrun_id, **kwargs):
         """
-        
+
         This method is used to get a specific Modelrun by specifying the Id of the model run.\n
 
         This method makes a synchronous HTTP request by default. To make an
@@ -352,8 +352,8 @@ class DefaultApi(object):
 
     def search_model_progress(self, **kwargs):
         """
-        
-        
+
+
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please define a `callback` function
@@ -426,7 +426,7 @@ class DefaultApi(object):
 
     def search_modelruns(self, **kwargs):
         """
-        
+
         This method is used to search for model runs specifying a query paramter.\n
 
         This method makes a synchronous HTTP request by default. To make an
@@ -493,14 +493,14 @@ class DefaultApi(object):
                                             body=body_params,
                                             post_params=form_params,
                                             files=local_var_files,
-                                            response_type='list[QueryResult]',
+                                            response_type='QueryResult',
                                             auth_settings=auth_settings,
                                             callback=params.get('callback'))
         return response
 
     def start_modelrun(self, modelrun_id, **kwargs):
         """
-        
+
         This method enques a model run in the server after all necessary resources has been uploaded.\n
 
         This method makes a synchronous HTTP request by default. To make an
@@ -577,7 +577,7 @@ class DefaultApi(object):
 
     def upload_resource_to_modelrun(self, modelrun_id, resource_type, file, **kwargs):
         """
-        
+
         To upload a resource to a model run
 
         This method makes a synchronous HTTP request by default. To make an
