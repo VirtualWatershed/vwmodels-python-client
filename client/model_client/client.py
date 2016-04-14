@@ -1,6 +1,6 @@
 import json
 
-from swagger_client.api_client import ApiClient
+from ..swagger_client.api_client import ApiClient
 
 
 class ModelApiClient(ApiClient):
@@ -48,6 +48,7 @@ class ModelApiClient(ApiClient):
 
             self.authenticated = True
             self.jwt = json.loads(ret.data)['access_token']
+            self.set_default_header('Authorization', 'JWT ' + self.jwt)
 
         except:
             print "authentication failed!"
