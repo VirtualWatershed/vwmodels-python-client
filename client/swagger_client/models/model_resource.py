@@ -41,7 +41,8 @@ class ModelResource(object):
             'created_at': 'datetime',
             'modelrun_id': 'int',
             'resource_size': 'int',
-            'resource_type': 'str'
+            'resource_type': 'str',
+            'resource_url': 'str'
         }
 
         self.attribute_map = {
@@ -49,7 +50,8 @@ class ModelResource(object):
             'created_at': 'created_at',
             'modelrun_id': 'modelrun_id',
             'resource_size': 'resource_size',
-            'resource_type': 'resource_type'
+            'resource_type': 'resource_type',
+            'resource_url': 'resource_url'
         }
 
         self._id = None
@@ -157,6 +159,17 @@ class ModelResource(object):
         """
         return self._resource_type
 
+    @property
+    def resource_url(self):
+        """
+        Gets the resource_url of this ModelResource.
+
+
+        :return: The resource_url of this ModelResource.
+        :rurl: str
+        """
+        return self._resource_url
+
     @resource_type.setter
     def resource_type(self, resource_type):
         """
@@ -167,6 +180,17 @@ class ModelResource(object):
         :type: str
         """
         self._resource_type = resource_type
+
+    @resource_url.setter
+    def resource_url(self, resource_url):
+        """
+        Sets the resource_url of this ModelResource.
+
+
+        :param resource_url: The resource_url of this ModelResource.
+        :url: str
+        """
+        self._resource_url = resource_url
 
     def to_dict(self):
         """
