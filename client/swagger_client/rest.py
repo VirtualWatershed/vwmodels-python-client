@@ -34,6 +34,7 @@ from .configuration import Configuration
 
 try:
     import urllib3
+    urllib3.disable_warnings()
 except ImportError:
     raise ImportError('Swagger python client requires urllib3.')
 
@@ -81,8 +82,10 @@ class RESTClientObject(object):
         # cert_reqs
         if Configuration().verify_ssl:
             cert_reqs = ssl.CERT_REQUIRED
+            assert_hostname = True
         else:
             cert_reqs = ssl.CERT_NONE
+            assert_hostname = False
 
         # ca_certs
         if Configuration().ssl_ca_cert:
@@ -100,8 +103,9 @@ class RESTClientObject(object):
         # https pool manager
         self.pool_manager = urllib3.PoolManager(
             num_pools=pools_size,
-            cert_reqs=cert_reqs,
-            ca_certs=ca_certs,
+            assert_hostname=False,
+            cert_reqs='CERT_NONE',
+            ca_certs=None,
             cert_file=cert_file,
             key_file=key_file
         )
@@ -160,6 +164,7 @@ class RESTClientObject(object):
                                               fields=query_params,
                                               headers=headers)
         except urllib3.exceptions.SSLError as e:
+            import ipdb; ipdb.set_trace()
             msg = "{0}\n{1}".format(type(e).__name__, str(e))
             raise ApiException(status=0, reason=msg)
 

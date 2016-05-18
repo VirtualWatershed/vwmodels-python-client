@@ -1,56 +1,46 @@
 import json
+import urllib3
 
 from ..swagger_client.api_client import ApiClient
 
 
 class ModelApiClient(ApiClient):
 
-    def __init__(self, username=None, password=None, auth_host=None,
-                 model_host=None, **super_kwargs):
+    def __init__(self, api_key, auth_host, model_host, **super_kwargs):
         """
         Important super_kwarg is host
         """
-        self.username = username
-        self.password = password
-
         super_kwargs['host'] = model_host
-        self.auth_host = auth_host
-
-        self.authenticated = False
-
         super(ModelApiClient, self).__init__(**super_kwargs)
 
-    def authenticate_jwt(self, username=None, password=None):
+        self.auth_host = auth_host
 
-        if username is None:
-            if self.username is None:
-                raise RuntimeError("No username has been provided")
+        self.jwt = api_key
+        if api_key is not None:
+            self.set_default_header('Authorization', 'JWT ' + self.jwt)
 
-            else:
-                username = self.username
+    @classmethod
+    def from_username_password(cls, username, password,
+                               auth_host, model_host):
 
-        if password is None:
-            if self.password is None:
-                raise RuntimeError("No password has been provided")
-
-            else:
-                password = self.password
-
-        url = self.auth_host + '/v1/auth'
+        url = auth_host + '/v1/auth'
         ret = None
 
         try:
-            ret = self.request(
+            http = urllib3.PoolManager()
+            ret = http.request(
                 "POST", url,
                 headers={'Content-Type': 'application/json'},
                 body=dict(username=username, password=password)
             )
 
-            self.authenticated = True
-            self.jwt = json.loads(ret.data)['access_token']
-            self.set_default_header('Authorization', 'JWT ' + self.jwt)
+            jwt = json.loads(ret.data)['access_token']
 
-        except:
+            return cls(api_key=jwt, auth_host=auth_host)
+            cls.set_default_header('Authorization', 'JWT ' + self.jwt)
+
+        except Exception as e:
             print "authentication failed!"
+            print e.message
 
         return ret
